@@ -2,17 +2,18 @@ import { UPDATE_SETTINGS } from '../actions/settingsAction';
 
 const initialState = {
 	settings: {
-		minimum: 0,
-		maximum: 1000,
+		minimum: '0',
+		maximum: '1000',
 	},
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case UPDATE_SETTINGS:
+			console.log(`action =>`, action);
 			return {
 				...state,
-				products: [{ name: action.product }, ...state.products],
+				settings: action.settings,
 			};
 		default:
 			return state;

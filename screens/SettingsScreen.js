@@ -12,17 +12,20 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import * as settingsActions from '../store/actions/settingsAction';
 import Colors from '../constants/Colors';
+import { useState } from 'react';
 
 const SettingsScreen = () => {
 	const settings = useSelector((state) => {
 		return state.settings.settings;
 	});
+	const [mini, setMini] = useState(settings.minimum);
+	const [maxi, setMaxi] = useState(settings.maximum);
 
 	const dispatch = useDispatch();
 
 	const onSubmitHandler = () => {
 		Keyboard.dismiss();
-		dispatch(settingsActions.updateSettings(settings));
+		dispatch(settingsActions.updateSettings({ mini, maxi }));
 	};
 
 	return (
@@ -39,10 +42,8 @@ const SettingsScreen = () => {
 								autoFocus
 								style={styles.input}
 								keyboardType='decimal-pad'
-								onChangeText={(text) =>
-									console.log(`text =>`, text)
-								}
-								value={settings.minimum.toString()}
+								onChangeText={setMini}
+								value={mini}
 							/>
 						</View>
 						<View style={styles.inputView}>
@@ -53,10 +54,8 @@ const SettingsScreen = () => {
 								autoFocus
 								style={styles.input}
 								keyboardType='decimal-pad'
-								onChangeText={(text) =>
-									console.log(`text =>`, text)
-								}
-								value={settings.maximum.toString()}
+								onChangeText={setMaxi}
+								value={maxi}
 							/>
 						</View>
 					</View>
