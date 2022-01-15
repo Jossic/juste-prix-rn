@@ -18,14 +18,14 @@ const SettingsScreen = () => {
 	const settings = useSelector((state) => {
 		return state.settings.settings;
 	});
-	const [mini, setMini] = useState(settings.minimum);
-	const [maxi, setMaxi] = useState(settings.maximum);
+	const [minimum, setMinimum] = useState(settings.minimum);
+	const [maximum, setMaximum] = useState(settings.maximum);
 
 	const dispatch = useDispatch();
 
 	const onSubmitHandler = () => {
 		Keyboard.dismiss();
-		dispatch(settingsActions.updateSettings({ mini, maxi }));
+		dispatch(settingsActions.updateSettings({ minimum, maximum }));
 	};
 
 	return (
@@ -42,8 +42,8 @@ const SettingsScreen = () => {
 								autoFocus
 								style={styles.input}
 								keyboardType='decimal-pad'
-								onChangeText={setMini}
-								value={mini}
+								onChangeText={setMinimum}
+								value={minimum}
 							/>
 						</View>
 						<View style={styles.inputView}>
@@ -54,8 +54,8 @@ const SettingsScreen = () => {
 								autoFocus
 								style={styles.input}
 								keyboardType='decimal-pad'
-								onChangeText={setMaxi}
-								value={maxi}
+								onChangeText={setMaximum}
+								value={maximum}
 							/>
 						</View>
 					</View>

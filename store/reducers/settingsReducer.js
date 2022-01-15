@@ -10,7 +10,7 @@ const initialState = {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case UPDATE_SETTINGS:
-			console.log(`action =>`, action);
+			// console.log(`action =>`, action);
 			return {
 				...state,
 				settings: action.settings,

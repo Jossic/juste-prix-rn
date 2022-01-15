@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import {
 	StyleSheet,
 	Text,
@@ -10,9 +11,20 @@ import {
 	TextInput,
 } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
+import { useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 
 const HomeScreen = () => {
+	const settings = useSelector((state) => {
+		return state.settings.settings;
+	});
+	console.log(`settings test =>`, settings);
+	useEffect(() => {
+		setMinimum(settings.minimum);
+		setMaximum(settings.maximum);
+	}, [settings]);
+	const [minimum, setMinimum] = useState(settings.minimum || 0);
+	const [maximum, setMaximum] = useState(settings.maximum || 1000);
 	const [game, setGame] = useState(false);
 	const [num, setNum] = useState();
 	return (
@@ -27,8 +39,8 @@ const HomeScreen = () => {
 
 					<Text>
 						Retrouvez le juste prix entre{' '}
-						<Text style={styles.orange}>0</Text> et{' '}
-						<Text style={styles.orange}>1000</Text>.
+						<Text style={styles.orange}>{minimum}</Text> et{' '}
+						<Text style={styles.orange}>{maximum}</Text>.
 					</Text>
 					{game ? (
 						// <TouchableOpacity
