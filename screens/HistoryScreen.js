@@ -7,7 +7,7 @@ const HistoryScreen = () => {
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.container}>
-					<Text style={styles.histo}>Historique</Text>
+					<Text style={styles.textTitle}>Historique</Text>
 					<Text style={styles.paraph}>
 						Commencez par jouer votre première partie pour consulter
 						votre historique
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 		paddingTop: 20,
 		paddingBottom: 10,
 	},
-	histo: {
+	textTitle: {
 		color: Colors.primary,
 		fontSize: 26,
 		fontWeight: 'bold',
