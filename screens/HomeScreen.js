@@ -49,6 +49,7 @@ const HomeScreen = () => {
 									value={num}
 									keyboardType='number-pad'
 									onChangeText={setNum}
+									textContentType='num'
 									autoFocus={true}
 								/>
 								<Ionicons

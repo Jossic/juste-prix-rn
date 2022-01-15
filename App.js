@@ -3,22 +3,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
 
 //Redux
-// import { createStore, combineReducers } from 'redux';
-// import { Provider } from 'react-redux';
-// import placesReducer from './store/reducers/places';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import settingsReducer from './store/reducers/settingsReducer';
 
-// const rootReducer = combineReducers({
-// places: placesReducer,
-// products: productsReducer,
-// });
+const rootReducer = combineReducers({
+	settings: settingsReducer,
+});
 
-// const store = createStore(rootReducer);
+const store = createStore(rootReducer);
 
 export default function App() {
 	return (
-		// <Provider store={store}>
-		<AppNavigator />
-		// </Provider>
+		<Provider store={store}>
+			<AppNavigator />
+		</Provider>
 	);
 }
 

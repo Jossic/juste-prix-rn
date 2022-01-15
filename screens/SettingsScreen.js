@@ -1,6 +1,7 @@
 import React from 'react';
 import {
 	Dimensions,
+	Keyboard,
 	SafeAreaView,
 	StyleSheet,
 	Text,
@@ -8,9 +9,22 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import * as settingsActions from '../store/actions/settingsAction';
 import Colors from '../constants/Colors';
 
 const SettingsScreen = () => {
+	const settings = useSelector((state) => {
+		return state.settings.settings;
+	});
+
+	const dispatch = useDispatch();
+
+	const onSubmitHandler = () => {
+		Keyboard.dismiss();
+		dispatch(settingsActions.updateSettings(settings));
+	};
+
 	return (
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -28,7 +42,7 @@ const SettingsScreen = () => {
 								onChangeText={(text) =>
 									console.log(`text =>`, text)
 								}
-								value='0'
+								value={settings.minimum.toString()}
 							/>
 						</View>
 						<View style={styles.inputView}>
@@ -42,13 +56,13 @@ const SettingsScreen = () => {
 								onChangeText={(text) =>
 									console.log(`text =>`, text)
 								}
-								value='1000'
+								value={settings.maximum.toString()}
 							/>
 						</View>
 					</View>
 					<TouchableOpacity
 						style={styles.button}
-						onPress={() => console.log(`press`)}>
+						onPress={() => onSubmitHandler()}>
 						<Text style={{ color: 'white' }}>Sauvegarder</Text>
 					</TouchableOpacity>
 				</View>
