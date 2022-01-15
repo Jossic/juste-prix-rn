@@ -36,8 +36,16 @@ export const AppTabNavigator = () => {
 				component={HomeScreen}
 				options={{ headerShown: false }}
 			/>
-			<Tab.Screen name='Historique' component={HistoryScreen} />
-			<Tab.Screen name='Paramètres' component={SettingsScreen} />
+			<Tab.Screen
+				name='Historique'
+				component={HistoryScreen}
+				options={{ headerShown: false }}
+			/>
+			<Tab.Screen
+				name='Paramètres'
+				component={SettingsScreen}
+				options={{ headerShown: false }}
+			/>
 		</Tab.Navigator>
 	);
 };
