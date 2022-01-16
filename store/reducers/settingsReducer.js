@@ -21,8 +21,6 @@ export default (state = initialState, action) => {
 				settings: action.settings,
 			};
 		case START_GAME:
-			console.log(`action =>`, action);
-
 			return {
 				...state,
 				gameStarted: true,

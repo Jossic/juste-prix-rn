@@ -23,7 +23,7 @@ const HomeScreen = () => {
 		// console.log(`state =>`, state);
 		return state.settings;
 	});
-	console.log(`randomState =>`, randomState);
+	// console.log(`randomState =>`, randomState);
 	const [randomNum, setRandomNum] = useState(randomState.random);
 
 	const dispatch = useDispatch();
@@ -31,6 +31,11 @@ const HomeScreen = () => {
 	const [maximum, setMaximum] = useState(settings.maximum || 1000);
 	const [game, setGame] = useState(false);
 	const [num, setNum] = useState();
+	const [displayPlusMoins, setDisplayPlusMoins] = useState({
+		type: '',
+		message: '',
+	});
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
 		setMinimum(settings.minimum);
@@ -39,10 +44,36 @@ const HomeScreen = () => {
 
 	const startGame = () => {
 		setGame(true);
+		setCount(0);
 		dispatch(settingsActions.startGame(minimum, maximum));
 	};
 
-	const tryNumber = () => {};
+	const tryNumber = () => {
+		console.log(`randomState.random =>`, randomState.random);
+		// console.log(`num =>`, typeof num);
+		setDisplayPlusMoins('');
+		if (num === randomState.random.toString()) {
+			setCount((old) => old + 1);
+			setDisplayPlusMoins({
+				type: 'green',
+				message: `Bravo !! ${count} coups`,
+			});
+			// Save info dans l'historique
+		} else if (num > randomState.random.toString()) {
+			setCount((old) => old + 1);
+			setDisplayPlusMoins({
+				type: 'yellow',
+				message: "C'est moins !",
+			});
+		} else if (num < randomState.random.toString()) {
+			setCount((old) => old + 1);
+			setDisplayPlusMoins({
+				type: 'blue',
+				message: "C'est plus !",
+			});
+		}
+		setNum('');
+	};
 
 	return (
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -80,6 +111,9 @@ const HomeScreen = () => {
 									value={num}
 									keyboardType='number-pad'
 									onChangeText={setNum}
+									blurOnSubmit={false}
+									onSubmitEditing={() => tryNumber()}
+									onFocus={() => setNum()}
 									textContentType='num'
 									autoFocus={true}
 								/>
@@ -100,6 +134,19 @@ const HomeScreen = () => {
 							<Text style={{ color: 'white' }}>Commencer</Text>
 						</TouchableOpacity>
 					)}
+					{displayPlusMoins.message ? (
+						<View
+							style={{
+								...styles.alert,
+								backgroundColor: displayPlusMoins.type,
+							}}>
+							<Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+								{displayPlusMoins.message}
+							</Text>
+						</View>
+					) : (
+						<Text>{''}</Text>
+					)}
 				</View>
 			</SafeAreaView>
 		</View>
@@ -116,6 +163,16 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingTop: 20,
 		paddingBottom: 10,
+	},
+	alert: {
+		marginTop: 20,
+		paddingVertical: 9,
+		paddingHorizontal: 5,
+		borderRadius: 5,
+		height: 45,
+		width: Dimensions.get('window').width * 0.5,
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	textPrice: {
 		color: 'white',
