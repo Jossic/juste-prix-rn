@@ -11,22 +11,39 @@ import {
 	TextInput,
 } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as settingsActions from '../store/actions/settingsAction';
 import Colors from '../constants/Colors';
 
 const HomeScreen = () => {
 	const settings = useSelector((state) => {
 		return state.settings.settings;
 	});
-	console.log(`settings test =>`, settings);
-	useEffect(() => {
-		setMinimum(settings.minimum);
-		setMaximum(settings.maximum);
-	}, [settings]);
+	const randomState = useSelector((state) => {
+		// console.log(`state =>`, state);
+		return state.settings;
+	});
+	console.log(`randomState =>`, randomState);
+	const [randomNum, setRandomNum] = useState(randomState.random);
+
+	const dispatch = useDispatch();
 	const [minimum, setMinimum] = useState(settings.minimum || 0);
 	const [maximum, setMaximum] = useState(settings.maximum || 1000);
 	const [game, setGame] = useState(false);
 	const [num, setNum] = useState();
+
+	useEffect(() => {
+		setMinimum(settings.minimum);
+		setMaximum(settings.maximum);
+	}, [settings]);
+
+	const startGame = () => {
+		setGame(true);
+		dispatch(settingsActions.startGame(minimum, maximum));
+	};
+
+	const tryNumber = () => {};
+
 	return (
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<SafeAreaView style={{ flex: 1 }}>
@@ -49,11 +66,13 @@ const HomeScreen = () => {
 						// 	<Text style={{ color: 'white' }}>Commencer</Text>
 						// </TouchableOpacity>
 						<>
-							<View style={styles.textPrice}>
-								<Text style={{ color: 'white' }}>
-									#1 Quel est le juste prix ?
-								</Text>
-							</View>
+							<TouchableOpacity onPress={() => setGame(!game)}>
+								<View style={styles.textPrice}>
+									<Text style={{ color: 'white' }}>
+										#1 Quel est le juste prix ?
+									</Text>
+								</View>
+							</TouchableOpacity>
 
 							<View style={styles.viewInput}>
 								<TextInput
@@ -64,18 +83,20 @@ const HomeScreen = () => {
 									textContentType='num'
 									autoFocus={true}
 								/>
-								<Ionicons
-									style={styles.arrow}
-									name='arrow-forward-outline'
-									size={35}
-									color={Colors.secondary}
-								/>
+								<TouchableOpacity onPress={() => tryNumber()}>
+									<Ionicons
+										style={styles.arrow}
+										name='arrow-forward-outline'
+										size={35}
+										color={Colors.secondary}
+									/>
+								</TouchableOpacity>
 							</View>
 						</>
 					) : (
 						<TouchableOpacity
 							style={styles.button}
-							onPress={() => setGame(!game)}>
+							onPress={() => startGame()}>
 							<Text style={{ color: 'white' }}>Commencer</Text>
 						</TouchableOpacity>
 					)}

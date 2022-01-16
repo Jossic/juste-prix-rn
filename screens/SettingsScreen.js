@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+	Alert,
 	Dimensions,
 	Keyboard,
 	SafeAreaView,
@@ -14,7 +15,7 @@ import * as settingsActions from '../store/actions/settingsAction';
 import Colors from '../constants/Colors';
 import { useState } from 'react';
 
-const SettingsScreen = () => {
+const SettingsScreen = ({ navigation }) => {
 	const settings = useSelector((state) => {
 		return state.settings.settings;
 	});
@@ -26,6 +27,8 @@ const SettingsScreen = () => {
 	const onSubmitHandler = () => {
 		Keyboard.dismiss();
 		dispatch(settingsActions.updateSettings({ minimum, maximum }));
+		Alert.alert('SAUVEGARDE EFFECTUÉE', 'Vos données ont étés validées');
+		navigation.navigate('Home');
 	};
 
 	return (
