@@ -1,4 +1,8 @@
-import { START_GAME, UPDATE_SETTINGS } from '../actions/settingsAction';
+import {
+	SAVE_DATA,
+	START_GAME,
+	UPDATE_SETTINGS,
+} from '../actions/settingsAction';
 
 const initialState = {
 	settings: {
@@ -6,6 +10,7 @@ const initialState = {
 		maximum: '1000',
 	},
 	gameStarted: false,
+	score: [],
 };
 
 const random = (min, max) => {
@@ -25,6 +30,20 @@ export default (state = initialState, action) => {
 				...state,
 				gameStarted: true,
 				random: random(state.settings.minimum, state.settings.maximum),
+			};
+		case SAVE_DATA:
+			console.log(`state 2 =>`, state);
+			return {
+				...state,
+				gameStarted: false,
+				score: [
+					{
+						count: action.count,
+						randomNum: action.randomNum,
+						player: 'Joueur inconnu',
+					},
+					...state.score,
+				],
 			};
 		default:
 			return state;

@@ -1,17 +1,37 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 
 const HistoryScreen = () => {
+	const score = useSelector((state) => {
+		// console.log(`state =>`, state);
+		return state.settings.score;
+	});
+
 	return (
 		<View style={{ flex: 1, backgroundColor: 'white' }}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.container}>
 					<Text style={styles.textTitle}>Historique</Text>
-					<Text style={styles.paraph}>
-						Commencez par jouer votre première partie pour consulter
-						votre historique
-					</Text>
+					{score.length > 0 ? (
+						<FlatList
+							data={score}
+							renderItem={({ item }) => (
+								<View>
+									<Text>
+										{item.count} - {item.randomNum}
+									</Text>
+								</View>
+							)}
+							keyExtractor={(item) => item.id}
+						/>
+					) : (
+						<Text style={styles.paraph}>
+							Commencez par jouer votre première partie pour
+							consulter votre historique
+						</Text>
+					)}
 				</View>
 			</SafeAreaView>
 		</View>

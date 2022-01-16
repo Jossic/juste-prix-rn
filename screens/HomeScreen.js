@@ -59,6 +59,8 @@ const HomeScreen = () => {
 				message: `Bravo !! ${count} coups`,
 			});
 			// Save info dans l'historique
+			dispatch(settingsActions.saveData(count, randomState.random));
+			setGame(false);
 		} else if (num > randomState.random.toString()) {
 			setCount((old) => old + 1);
 			setDisplayPlusMoins({
